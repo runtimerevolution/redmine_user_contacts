@@ -1,0 +1,27 @@
+<% defaults = Redmine::Plugin::registered_plugins[:redmine_contact_directory].settings[:default] %>
+
+<p>
+  <label><%= l(:allow_anon_access) %></label>
+  <%= hidden_field_tag 'settings[anonymous_access]', 0 %>
+  <%= check_box_tag 'settings[anonymous_access]', 1, @settings['anonymous_access'].to_i == 1 %>
+</p>
+
+<p>
+  <label><%= l(:groups_shown) %>:</label>
+  <%= text_area_tag("settings[groups_shown]", @settings["groups_shown"]) %>
+</p>
+
+<p>
+  <label><%= l(:custom_fields_shown) %>:</label>
+  <%= text_area_tag("settings[custom_fields_shown]", @settings["custom_fields_shown"]) %>
+</p>
+
+<p>
+  <label><%= l(:show_avatar) %>:</label>
+  <%= check_box_tag 'settings[show_avatar]', 1, @settings['show_avatar'].to_i == 1 %>
+</p>
+
+<p>
+  <label><%= l(:avatar_size) %>:</label>
+  <%= text_field_tag("settings[avatar_size]", @settings["avatar_size"]) %>
+</p>

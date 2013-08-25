@@ -1,0 +1,44 @@
+<h2><%=l(:contact_directory_title)%></h2>
+
+<%= form_tag(directory_path, :method => :get) do %>
+<fieldset><legend><%= l(:label_filter_plural) %></legend>
+
+<% if @groups.present? %>
+<label for='group_id'><%= l(:label_group) %>:</label>
+<%= select_tag 'group_id', content_tag('option') + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.submit(); return false;"  %>
+<% end %>
+
+<label for='name'><%= l(:label_user) %>:</label>
+<%= text_field_tag 'name', params[:name], :size => 30 %>
+<%= submit_tag l(:button_apply), :class => "small", :name => nil %>
+<%= link_to l(:button_clear), users_path, :class => 'icon icon-reload' %>
+</fieldset>
+<% end %>
+&nbsp;
+
+<div class="autoscroll">
+<table class="list">
+  <thead><tr>
+  <%= sort_header_tag('firstname', :caption => l(:field_name)) %>
+  <%= sort_header_tag('mail', :caption => l(:field_mail)) %>
+  <% @custom_fields.each do |custom_field| %>
+    <%= sort_header_tag(custom_field.name, :caption => custom_field.name) %>
+  <% end %>
+    
+  </tr></thead>
+  <tbody>
+<% for user in @users -%>
+  <tr class="<%= user.css_classes %> <%= cycle("odd", "even") %>">
+    <td class="username"><%= avatar(user, :size => @avatar_size ) %><%= link_to h(user.name), user_path(user) if @show_avatar %></td>
+    <td class="email"><%= mail_to(h(user.mail)) %></td>
+    <% @custom_fields.each do |custom_field| %>
+      <%# TODO there's probably a way in the Redmine API to fetch users with their custom fields in a single query %>
+      <td class="custom_field"><%= user.custom_field_value custom_field %></td>
+    <% end %>  </tr>
+<% end -%>
+  </tbody>
+</table>
+</div>
+<p class="pagination"><%= pagination_links_full @user_pages, @user_count %></p>
+
+<% html_title(l(:contact_directory_title)) -%>
