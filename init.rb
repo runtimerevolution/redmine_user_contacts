@@ -3,7 +3,7 @@ require 'redmine_user_contacts/user_patch'
 
 Redmine::Plugin.register :redmine_user_contacts do
   name        'Redmine User Contacts'
-  author      'Ricardo Trindade'
+  author      'Runtime Revolution, Ricardo Trindade'
   description 'A plugin for Redmine that adds a contact directory feature based on user custom fields'
   url         'https://github.com/runtimerevolution/redmine_user_contacts'
   version     '1.0'
