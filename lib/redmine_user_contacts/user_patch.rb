@@ -1,7 +1,7 @@
 require_dependency 'principal'
 require_dependency 'user'
 
-module RedmineContactDirectory
+module RedmineUserContacts
   module Patches
     module UserPatch
       def self.included(base)
@@ -22,5 +22,5 @@ module RedmineContactDirectory
 end
 
 ActionDispatch::Callbacks.to_prepare do
-  User.send(:include, RedmineContactDirectory::Patches::UserPatch)
+  User.send(:include, RedmineUserContacts::Patches::UserPatch)
 end

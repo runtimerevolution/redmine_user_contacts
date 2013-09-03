@@ -41,7 +41,7 @@ class DirectoryController < ApplicationController
   # TODO can be reduced to a single query
   def groups_to_show
     begin
-      group_names = Setting['plugin_redmine_contact_directory']['groups_shown'].to_s
+      group_names = plugin_setting('groups_shown').to_s
       group_names.split(',').map {|group_name|
         Group.named(group_name)
       }.flatten       
@@ -54,7 +54,7 @@ class DirectoryController < ApplicationController
   # TODO can be reduced to a single query
   def custom_fields_to_show
     begin
-      custom_field_names = Setting['plugin_redmine_contact_directory']['custom_fields_shown'].to_s
+      custom_field_names = plugin_setting('custom_fields_shown').to_s
       custom_field_names.split(',').map {|custom_field_name|
         UserCustomField.find_by_name(custom_field_name.strip)        
       }.flatten.compact
@@ -64,11 +64,14 @@ class DirectoryController < ApplicationController
   end
   
   def should_show_avatar?
-    Setting['plugin_redmine_contact_directory']['show_avatar']
+    plugin_setting('show_avatar')
   end
 
   def avatar_size
-    Setting['plugin_redmine_contact_directory']['avatar_size'].to_i
+    plugin_setting('avatar_size').to_i
   end
-    
+  
+  def plugin_setting(setting_name)
+    Setting['plugin_redmine_user_contacts'][setting_name]
+  end
 end

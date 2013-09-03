@@ -1,11 +1,11 @@
 require 'redmine'
-require 'redmine_contact_directory/user_patch'
+require 'redmine_user_contacts/user_patch'
 
-Redmine::Plugin.register :redmine_contact_directory do
-  name        'Contact Directory'
+Redmine::Plugin.register :redmine_user_contacts do
+  name        'Redmine User Contacts'
   author      'Ricardo Trindade'
   description 'A plugin for Redmine that adds a contact directory feature based on user custom fields'
-  url         'https://github.com/runtimerevolution/XXXXXX'
+  url         'https://github.com/runtimerevolution/redmine_user_contacts'
   version     '1.0'
 
   requires_redmine :version_or_higher => '2.3.0'
@@ -14,7 +14,7 @@ Redmine::Plugin.register :redmine_contact_directory do
     'anonymous_access' => "0",
     'groups_shown' => "",
     'custom_fields_shown' => "",    
-    'show_avatar' => true,    
+    'show_avatar' => "1",
     'avatar_size' => 32,
   }, :partial => 'settings/settings'
 
@@ -29,7 +29,7 @@ Redmine::Plugin.register :redmine_contact_directory do
        :caption => :contact_directory_title, 
     	 :if =>  Proc.new {
     	 	 User.current.allowed_to?({ :controller => 'directory', :action => 'index' }, nil, :global => true) ||
-    	   Setting['plugin_redmine_contact_directory']['anonymous_access'].to_i == 1
+    	   Setting['plugin_redmine_user_contacts']['anonymous_access'].to_i == 1
     	 }
 	
 end
